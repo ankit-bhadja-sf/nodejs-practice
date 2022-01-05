@@ -11,12 +11,11 @@ router.get('/add-product', (req, res, next) => {
 });
 
 router.post('/add-product', (req, res) => {
-    
     console.log(req.body);
-    // setTimeout(() => {
-    //     return res.redirect('/');
-    // }, 5000)
-    res.redirect('/')
+    setTimeout(() => {
+        return res.render('/');
+    }, 5000)
+    // res.render('shop', {prods: products, docTitle: 'shop'});
 });
 
 module.exports = router
