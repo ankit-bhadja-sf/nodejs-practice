@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 //const routes = require('./routes')
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const rootDir = require('../util/path');
+const rootDir = require('./util/path');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(shopRoutes);
