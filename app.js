@@ -6,16 +6,13 @@ const expressHbs = require('express-handlebars');
 
 const app = express();
 
-
-//const rootDir = require('./util/path');
-
 //app.engine('hbs', expressHbs());
 //app.set('view engine' , 'hbs')
-app.set('view engine', 'pug');
-//app.set('view engine' , 'ejs')
+//app.set('view engine', 'pug');
+app.set('view engine' , 'ejs')
 app.set('views', 'views');  
 
-//const adminRoutes = require('./routes/admin');
+
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
