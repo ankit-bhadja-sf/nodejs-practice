@@ -7,7 +7,7 @@ const p = path.join(
     'products.json'
     );
 
-const getProductsFromFile = cb => {
+const getProductsFromFile = (cb) => {
 
     fs.readFile(p, (err, fileContent) => {
         if (err) {
@@ -22,8 +22,8 @@ module.exports = class Product {
     constructor(t) {
         this.title = t;
     }
-
-    save() {
+    save() 
+    {
         getProductsFromFile(products => {
             products.push(this);
             fs.writeFile(p, JSON.stringify(products), err => {
