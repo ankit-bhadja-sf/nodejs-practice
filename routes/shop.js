@@ -7,11 +7,18 @@ const adminData = require('./admin');
 
 const router = express.Router();
 
+const shopController = require('../controllers/shop.js');
 
-router.get('/', (req, res, next) => {
-    const products = adminData.products;
-    res.render('shop', {prods: products, docTitle: 'shop'});
-});
+
+router.get('/', shopController.getIndex);
+
+router.get('/products', shopController.addProducts);
+
+router.get('/cart', shopController.getCart);
+
+router.get('/orders', shopController.getOrders);
+
+router.get('/checkout', shopController.getCheckout);
 
 
 module.exports = router
