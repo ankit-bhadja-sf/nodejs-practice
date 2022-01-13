@@ -15,10 +15,9 @@ router.get('/products', adminController.getProducts);
 router.post('/add-product', adminController.postAddProduct);
 
 router.get('/edit-product/:productId', adminController.getEditProduct);
-<<<<<<< HEAD
-=======
-
+//
 router.post('/edit-product', adminController.postEditProduct);
->>>>>>> 2734e963dd9719e6410a5a32dda98612c9cd642e
+/////////delete router
+router.post('/delete-product', adminController.postDeleteProduct);
 
 module.exports = router

@@ -14,45 +14,40 @@ exports.postAddProduct = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(title, imageUrl, description, price);
+  const product = new Product(null, title, imageUrl, price, description);
   product.save();
   res.redirect('/');
 };
 
-exports.getEditProduct = (req, res) => {
+// exports.getEditProduct = (req, res) => {
+//   const editMode = req.query.edit;
+//   if (!editMode) {
+//     return res.redirect('/');
+//   }
+//   const prodId = req.params.productId;
+//   Product.findById(prodId, product => {
+//     if (!product) {
+//       return res.redirect('/');
+//     }
+//   });
+// }
+exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
-    return res.redirect('/');
+     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {
-    if (!product) {
-      return res.redirect('/');
-    }
+   Product.findById(prodId, product => {
+     if (!product) {
+       return res.redirect('/');
+     }
+  res.render('admin/edit-product', {
+    pageTitle: 'Edit Product',
+    path: '/admin/edit-product',
+    editing: editMode,
+    product: product
   });
-}
-
-exports.postAddProduct = (req, res,) => {
-    const title = req.body.title;
-    const imageUrl = req.body.imageUrl;
-    const price = req.body.price;
-    const description = req.body.description;
-    const product = new Product( title, imageUrl, price, description)
-    product.save();
-    res.redirect('/');
-}
-
-exports.getEditProduct = (req, res, next) => {
-    const editMode = req.query.edit;
-    if (!editMode) {
-        res.redirect('/');
-    }
-    res.render('admin/edit-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
-      editing: editMode,
-      product: product
-    });
+ });
 };
 
 ///////////////////////////////Admin edit Product
@@ -63,15 +58,15 @@ exports.postEditProduct = (req, res) => {
     const updatedImageUrl = req.body.imageUrl;
     const updatedPrice = req.body.price;
     const updatedDesc = req.body.description;
-    const updateProducts = new Product(
+    const updateProduct = new Product(
         prodId, 
         updatedTitle, 
         updatedImageUrl, 
         updatedPrice, 
         updatedDesc
         );
-        updateProducts.save();
-        //res.redirect('/admin/products');
+        updateProduct.save();
+        res.redirect('/admin/products');
 };
 
 exports.getProducts = (req, res) => {
@@ -83,3 +78,9 @@ exports.getProducts = (req, res) => {
     });
   });
 };
+
+exports.postDeleteProduct = (req, res) => {
+  const prodId = req.body.productId;
+  Product.deleteById(prodId);
+  res.redirect('/admin/products');
+}
