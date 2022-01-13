@@ -39,7 +39,7 @@ exports.getCart = (req, res, next) => {
   });
 };
 
-exports.postCart = (req, res, next) => {
+exports.postCart = (req, res) => {
   const prodId = req.body.productId;
   Product.findById(prodId, product => {
     Cart.addProduct(prodId, product.price);
@@ -47,7 +47,7 @@ exports.postCart = (req, res, next) => {
   res.redirect('/cart');
 };
 
-exports.getOrders = (req, res, next) => {
+exports.getOrders = (req, res) => {
   res.render('shop/orders', {
     path: '/orders',
     pageTitle: 'Your Orders'
