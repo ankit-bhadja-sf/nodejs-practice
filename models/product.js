@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path');
+const { threadId } = require('worker_threads');
 
 const p = path.join(
     path.dirname(process.mainModule.filename), 
@@ -28,10 +29,23 @@ module.exports = class Product {
     save()  {
         this.id = Math.random().toString();
         getProductsFromFile(products => {
-            products.push(this);
-            fs.writeFile(p, JSON.stringify(products), err => {
+            if (threadId.id){
+                const existingProductIndex = products.findIndex(
+                    prod => prod.id === this.id 
+                );
+                const updateProducts = [...products];
+                updateProducts[existingProductIndex] = this;
+                fs.writeFile(p, JSON.stringify(updateProducts), err => {
+                    console.log(err);
+                });   
+            }
+            else{
+                products.push(this);
+                fs.writeFile(p, JSON.stringify(products), err => {
                 console.log(err);
             });
+            }
+            
         });
     }
 
