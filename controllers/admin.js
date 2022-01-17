@@ -31,7 +31,7 @@ exports.postAddProduct = (req, res) => {
 //     }
 //   });
 // }
-exports.getEditProduct = (req, res, next) => {
+exports.getEditProduct = (req, res) => {
   const editMode = req.query.edit;
   if (!editMode) {
      return res.redirect('/');
@@ -79,8 +79,8 @@ exports.getProducts = (req, res) => {
   });
 };
 
-exports.postDeleteProduct = (req, res) => {
+exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.deleteById(prodId);
   res.redirect('/admin/products');
-}
+};
