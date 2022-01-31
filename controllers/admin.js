@@ -110,7 +110,7 @@ exports.postDeleteProduct = (req, res, next) => {
     return product.destroy()
   })
   .then( result => {
-    res.redirect('/')
+    res.redirect('/admin/products')
   })
   .catch( err => {
     console.log(err);
