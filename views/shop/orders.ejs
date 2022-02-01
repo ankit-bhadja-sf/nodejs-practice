@@ -11,13 +11,13 @@
                         <li>
                             <h1># <%= order.id %></h1>
                             <ul>
-                                <% order.products.forEach( product => {%>
+                                <% order.products.forEach( product => { %>
                                     <li><%= product.title %> (<%= product.orderItem.quantity %>)</li>
                                 <%}) %>
                             </ul>
                         </li>
-                    <%} )%>
+                    <% })%>
                 </ul>
-                <%} %>
+                <% }%>
     </main>
         <%- include('../includes/end') %>
