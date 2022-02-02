@@ -48,6 +48,8 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+    // let token = req.csrfToken();
+    // res.cookie('XSRF-TOKEN', token);
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();
     next();
