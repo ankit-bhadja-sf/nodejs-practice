@@ -13,6 +13,8 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 }));
 
 
+
+
 exports.getLogin = (req, res, next) => {  
     let message = req.flash('error');
     if (message.length > 0) {
@@ -87,7 +89,7 @@ exports.postSignup = (req, res) => {
       res.redirect('/login')
       return transporter.sendMail({
         to: email,
-        from: 'shop@node-complete.com',
+        from: 'ankit.bhadaja@seaflux.tech',
         subject: 'Signup succeeded!',
         html: '<h1>You Successfully signed up!</h1>'
       });
@@ -132,9 +134,10 @@ exports.postReset = (req, res) => {
     const token = buffer.toString('hex');
     User.findOne({email: req.body.email})
     .then(user => {
+      console.log(user);
       if (!user){
         req.flash('error', 'No User Found for This Email')
-        res.redirect('/reset')
+        return res.redirect('/reset')
       }
       user.resetToken = token;
       user.resetTokenExpiration = Date.now() + 3600000;
@@ -144,7 +147,7 @@ exports.postReset = (req, res) => {
       res.redirect('/');
       transporter.sendMail({
         to: req.body.email,
-        from: 'shop@node-complete.com',
+        from: 'ankit.bhadaja@seaflux.tech',
         subject: 'Password Reset',
         html: ` 
           <p>Your Request a password Reset</p>
@@ -157,3 +160,5 @@ exports.postReset = (req, res) => {
     })
   })
 }
+
+exports.get
