@@ -61,8 +61,11 @@ exports.postLogin = (req, res, next) => {
     })
     .catch( err => {
       console.log(err);
-    })
-    
+      res.redirect('/login')
+    }) 
+  })
+  .catch(err => {
+    console.log(err);
   })
   
 }
@@ -144,6 +147,7 @@ exports.postReset = (req, res) => {
       return user.save();
     })
     .then( result => {
+      console.log(result);
       res.redirect('/');
       transporter.sendMail({
         to: req.body.email,
@@ -157,9 +161,9 @@ exports.postReset = (req, res) => {
     })
     .catch(err => {
       console.log(err);
-    })
-  })
-}
+    });
+  });
+};
 
 exports.getNewPassword = (req, res, next) => {
   const token = req.params.token;
