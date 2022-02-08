@@ -7,8 +7,12 @@ const sendgridTransport = require('nodemailer-sendgrid-transport');
 const user = require('../models/user');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // use SSL
   auth: {
-    api_key:'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'
+      user: 'ankit.bhadaja@seaflux.tech',
+      pass: 'ankit123'
   }
 }));
 
