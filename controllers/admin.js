@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const { validationResult } = require('express-validator');
+const { Mongoose } = require('mongoose');
 
 exports.getAddProduct = (req, res) => {
   res.render('admin/edit-product', {
@@ -24,6 +25,7 @@ exports.postAddProduct = (req, res) => {
   const price = req.body.price;
   const description = req.body.description;
   const product = new Product({
+    _id: new Mongoose.Types.ObjectId('62025fbaa45ae1becb92d707'),
     title: title, 
     imageUrl: imageUrl, 
     price: price, 
@@ -53,7 +55,11 @@ exports.postAddProduct = (req, res) => {
       console.log('created product');
       res.redirect('/admin/products')
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 // exports.getEditProduct = (req, res) => {
@@ -85,7 +91,11 @@ exports.getEditProduct = (req, res) => {
         validationErrors: []
       });
     })
-    .catch(err => console.log(er));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 ///////////////////////////////Admin edit Product
@@ -131,7 +141,11 @@ exports.postEditProduct = (req, res) => {
       res.redirect('/admin/products');
     })
    })
-  .catch(err => console.log(err))
+   .catch(err => {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });
 
   
 };
@@ -147,7 +161,11 @@ exports.getProducts = (req, res) => {
         path: '/admin/products',
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 
 };
 
@@ -158,5 +176,9 @@ exports.postDeleteProduct = (req, res, next) => {
     console.log('DESTROY PROJECT');
     res.redirect('/admin/products');
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });
 };
