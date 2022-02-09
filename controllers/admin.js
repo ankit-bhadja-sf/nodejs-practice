@@ -21,9 +21,10 @@ exports.getAddProduct = (req, res) => {
 
 exports.postAddProduct = (req, res) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const imageUrl = req.file;
   const price = req.body.price;
   const description = req.body.description;
+  console.log(imageUrl);
   const product = new Product({
     _id: new Mongoose.Types.ObjectId('62025fbaa45ae1becb92d707'),
     title: title, 

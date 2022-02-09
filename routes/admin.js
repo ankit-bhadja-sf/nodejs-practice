@@ -39,8 +39,6 @@ router.get('/add-product', isAuth, adminController.getAddProduct);
     body('title', 'Your Title length is very Short')
         .isLength({ min: 3})
         .trim(),
-    body('imageUrl', ' Your url is not Valid')
-        .isURL(),
     body('price', 'Please Input Double Number Value')
         .isFloat(),
     body('description', ' Your Desc is very Short')
