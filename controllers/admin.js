@@ -1,10 +1,20 @@
 const Product = require('../models/product');
+const { validationResult } = require('express-validator');
 
 exports.getAddProduct = (req, res) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
+    hasError: false,
+    errorMessage: "",
+    product: {
+      title: '',
+      imageUrl:'',
+      price:'',
+      description:''
+    },
+    validationErrors: []
   });
 };
 
@@ -20,6 +30,23 @@ exports.postAddProduct = (req, res) => {
     description: description,
     userId: req.user
   });
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(422).render('admin/edit-product', { 
+      pageTitle: 'Add Product',
+      path: '/admin/add-product',
+      editing: false,
+      hasError: true,
+      errorMessage: errors.array()[0].msg,
+      product: {
+        title: title,
+        imageUrl:imageUrl,
+        price:price,
+        description:description
+      },
+      validationErrors: errors.array()
+    });
+  }
   product.save()
     .then((result) => {
       //console.log(result);
@@ -52,7 +79,10 @@ exports.getEditProduct = (req, res) => {
         pageTitle: 'Edit Product',
         path: '/admin/edit-product',
         editing: editMode,
+        hasError: false,
         product: product,
+        errorMessage: '',
+        validationErrors: []
       });
     })
     .catch(err => console.log(er));
@@ -76,6 +106,25 @@ exports.postEditProduct = (req, res) => {
      product.imageUrl = updatedImageUrl;
      product.price = updatedPrice;
      product.description = updatedDesc;
+
+     const errors = validationResult(req)
+
+     if (!errors.isEmpty()) {
+       return res.status(422).render('admin/edit-product', {
+        pageTitle: 'Edit Product',
+        path: '/admin/edit-product',
+        editing: true,
+        hasError: true  ,
+        product: {
+          title: updatedTitle,
+          imageUrl: updatedImageUrl,
+          price: updatedPrice,
+          description: updatedDesc
+        },
+        errorMessage: errors.array()[0].msg,
+        validationErrors: errors.array()
+      });
+     }
      return product.save()
      .then(result => {
       console.log('UPDATED PRODUCT!');
